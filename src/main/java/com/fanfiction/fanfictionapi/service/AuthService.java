@@ -1,9 +1,9 @@
 package com.fanfiction.fanfictionapi.service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.fanfiction.fanfictionapi.DTO.RegistrationDTO;
 import org.springframework.http.ResponseEntity;
 
 public interface AuthService {
-  ResponseEntity<?> authorize(String username, String password);
+  ResponseEntity<?>       authorize(String username, String password);
+  ResponseEntity<String>  registration(RegistrationDTO request);
 }

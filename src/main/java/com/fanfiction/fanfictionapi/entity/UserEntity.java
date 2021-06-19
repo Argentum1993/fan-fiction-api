@@ -1,5 +1,6 @@
   package com.fanfiction.fanfictionapi.entity;
 
+  import com.fasterxml.jackson.annotation.JsonFormat;
   import java.util.Date;
   import javax.persistence.Column;
   import javax.persistence.Entity;
@@ -12,6 +13,8 @@
   import javax.persistence.ManyToMany;
   import javax.persistence.ManyToOne;
   import javax.persistence.Table;
+  import javax.persistence.Temporal;
+  import javax.persistence.TemporalType;
   import lombok.Data;
 
   @Data
@@ -32,7 +35,8 @@
     @Column(name = "email")
     private String email;
 
-    @Column(name = "reg_date")
+    @Column(name = "reg_date", insertable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date regDate;
 
     @ManyToOne
@@ -42,4 +46,13 @@
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private UserStatus status;
+
+    public UserEntity() {
+    }
+
+    public UserEntity(String userName, String password, String email) {
+      this.userName = userName;
+      this.password = password;
+      this.email = email;
+    }
   }

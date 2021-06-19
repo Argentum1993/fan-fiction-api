@@ -1,6 +1,7 @@
 package com.fanfiction.fanfictionapi.service.impl;
 
 import com.fanfiction.fanfictionapi.DTO.LoginResponseDTO;
+import com.fanfiction.fanfictionapi.DTO.RegistrationDTO;
 import com.fanfiction.fanfictionapi.entity.UserEntity;
 import com.fanfiction.fanfictionapi.security.jwt.JwtTokenProvider;
 import com.fanfiction.fanfictionapi.service.AuthService;
@@ -40,8 +41,19 @@ public class AuthServiceImpl implements AuthService {
       String token = jwtTokenProvider.createToken(email);
       return ResponseEntity.ok(new LoginResponseDTO(userEntity.getEmail(), token));
     } catch (AuthenticationException e){
+      System.out.println(e.getMessage());
       return new ResponseEntity<>(
           "Invalid username/password combination", HttpStatus.FORBIDDEN);
     }
+  }
+
+  @Override
+  public ResponseEntity<String> registration(RegistrationDTO request) {
+    UserEntity userEntity = new UserEntity(
+        request.getUsername(), request.getPassword(), request.getEmail());
+    userEntity = userService.saveUser(userEntity);
+    return userEntity != null
+        ? new ResponseEntity<>(userEntity.getUserName() + " you are register!", HttpStatus.OK)
+        : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
   }
 }
