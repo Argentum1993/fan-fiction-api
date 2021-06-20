@@ -1,5 +1,9 @@
 package com.fanfiction.fanfictionapi.service;
 
-public interface FanficService {
+import com.fanfiction.fanfictionapi.DTO.FanficDTO;
+import com.fanfiction.fanfictionapi.DTO.PaginationRequestDTO;
+import java.util.List;
 
+public interface FanficService {
+  List<FanficDTO> findByUserId(Long userId, PaginationRequestDTO pagination);
 }

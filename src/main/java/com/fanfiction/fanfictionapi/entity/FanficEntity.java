@@ -60,4 +60,7 @@ public class FanficEntity {
 
   @OneToMany(mappedBy = "fanficEntity", fetch = FetchType.LAZY)
   private Set<FanficRating> ratings;
+
+  @Column(name = "average_rating")
+  private int averageRating;
 }
