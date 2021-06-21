@@ -1,9 +1,13 @@
 package com.fanfiction.fanfictionapi.service.impl;
 
+import com.fanfiction.fanfictionapi.DTO.ChapterDTO;
 import com.fanfiction.fanfictionapi.DTO.FanficDTO;
 import com.fanfiction.fanfictionapi.DTO.PaginationRequestDTO;
 import com.fanfiction.fanfictionapi.entity.FanficEntity;
+import com.fanfiction.fanfictionapi.mapper.FanficEntityDtoMapper;
+import com.fanfiction.fanfictionapi.repository.ChapterEntityRepository;
 import com.fanfiction.fanfictionapi.repository.FanficEntityRepository;
+import com.fanfiction.fanfictionapi.service.ChapterService;
 import com.fanfiction.fanfictionapi.service.FanficService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,12 +19,15 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FanficServiceImpl implements FanficService {
-  private final FanficEntityRepository fanficEntityRepository;
+  private final FanficEntityRepository  fanficEntityRepository;
+  private final FanficEntityDtoMapper   fanficEntityDtoMapper;
 
   @Autowired
   public FanficServiceImpl(
-      FanficEntityRepository fanficEntityRepository) {
+      FanficEntityRepository fanficEntityRepository,
+      FanficEntityDtoMapper fanficEntityDtoMapper) {
     this.fanficEntityRepository = fanficEntityRepository;
+    this.fanficEntityDtoMapper = fanficEntityDtoMapper;
   }
 
   @Override
@@ -28,7 +35,7 @@ public class FanficServiceImpl implements FanficService {
     Pageable pageable;
 
     pageable =  createPageable(pagination);
-    return transformToFanficDTO(fanficEntityRepository.findByUserEntityId(userId, pageable));
+    return fanficEntityDtoMapper.map(fanficEntityRepository.findByUserEntityId(userId, pageable));
   }
 
   private Pageable createPageable(PaginationRequestDTO pagination){
@@ -47,20 +54,5 @@ public class FanficServiceImpl implements FanficService {
       }
     }
     return PageRequest.of(pageNumber, pageSize);
-  }
-
-  private List<FanficDTO> transformToFanficDTO(List<FanficEntity> fanficEntities){
-    if (fanficEntities == null)
-      return null;
-    return fanficEntities.stream()
-        .map((fanficEntity) -> new FanficDTO(
-            fanficEntity.getTitle(),
-            fanficEntity.getDescription(),
-            fanficEntity.getImg(),
-            fanficEntity.getPublicationDate(),
-            fanficEntity.getTagEntities(),
-            fanficEntity.getFandomEntity(),
-            fanficEntity.getAverageRating()
-        )).collect(Collectors.toList());
   }
 }
