@@ -38,6 +38,10 @@ public class FanficServiceImpl implements FanficService {
     return fanficEntityDtoMapper.map(fanficEntityRepository.findByUserEntityId(userId, pageable));
   }
 
+  public FanficDTO  getFanfic(Long id){
+    return fanficEntityDtoMapper.fanficEntityToDto(fanficEntityRepository.findById(id).get());
+  }
+
   private Pageable createPageable(PaginationRequestDTO pagination){
     int       pageNumber;
     int       pageSize;
