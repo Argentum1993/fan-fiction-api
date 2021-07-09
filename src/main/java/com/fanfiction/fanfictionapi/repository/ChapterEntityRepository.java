@@ -11,4 +11,5 @@ public interface ChapterEntityRepository extends JpaRepository<ChapterEntity, Lo
 
   @Query("SELECT c.name FROM ChapterEntity c WHERE c.fanficEntity.id = ?1")
   List<String>        findNamesByFanficEntityId(Long id, Sort sort);
+  ChapterEntity       findByFanficEntityIdAndAndNumber(Long id, int number);
 }

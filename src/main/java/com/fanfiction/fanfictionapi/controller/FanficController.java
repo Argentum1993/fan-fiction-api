@@ -20,11 +20,12 @@ public class FanficController {
   private final FanficService   fanficService;
 
   @Autowired
-  public FanficController(ChapterService chapterService,
-      FanficService fanficService,
-      FanficService fanficService1) {
+  public FanficController(
+      ChapterService chapterService,
+      FanficService fanficService
+  ) {
     this.chapterService = chapterService;
-    this.fanficService = fanficService1;
+    this.fanficService = fanficService;
   }
 
   //TODO: Delete before deploy
@@ -34,19 +35,23 @@ public class FanficController {
     return "ok";
   }
 
+  @GetMapping("/{id}")
+  public FanficDTO getFanfic(@PathVariable Long id){
+    return fanficService.getFanfic(id);
+  }
+
   @GetMapping("/{id}/chapters")
   public List<ChapterDTO> getAllChapters(@PathVariable Long id){
     return chapterService.getAllChaptersById(id);
+  }
+
+  @GetMapping("/{id}/chapters/{num}")
+  public ChapterDTO getAllChapters(@PathVariable Long id, @PathVariable int num){
+    return chapterService.getChapter(id, num);
   }
 
   @GetMapping("/{id}/chapters/name")
   public List<String> getChapterNames(@PathVariable Long id){
     return chapterService.getChapterNames(id);
   }
-
-  @GetMapping("/{id}")
-  public FanficDTO getFanfic(@PathVariable Long id){
-    return fanficService.getFanfic(id);
-  }
-
 }

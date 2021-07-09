@@ -26,6 +26,13 @@ public class ChapterServiceImpl implements ChapterService {
 
   @Override
   public List<String> getChapterNames(Long id) {
-    return chapterEntityRepository.findNamesByFanficEntityId(id, Sort.by(Sort.Direction.ASC, "number"));
+    return chapterEntityRepository
+        .findNamesByFanficEntityId(id, Sort.by(Sort.Direction.ASC, "number"));
+  }
+
+  @Override
+  public ChapterDTO getChapter(Long id, int num) {
+    return chapterEntityDtoMapper
+        .chapterEntityToDto(chapterEntityRepository.findByFanficEntityIdAndAndNumber(id, num));
   }
 }
