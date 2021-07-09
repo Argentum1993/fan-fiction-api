@@ -1,4 +1,4 @@
-package com.fanfiction.fanfictionapi.service;
+package com.fanfiction.fanfictionapi.entity;
 
 public enum Role {
   ROLE_USER,

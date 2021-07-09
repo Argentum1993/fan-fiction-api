@@ -8,7 +8,7 @@ public class Maps {
   // Controllers
   public static final String AUTH = VERSION_API + "/auth";
   public static final String FANFIC = VERSION_API + "/fanfic";
-
+  public static final String USERS = VERSION_API + "/users";
 
   // Config allowed endpoints
   public static final String LOGIN = "/login";

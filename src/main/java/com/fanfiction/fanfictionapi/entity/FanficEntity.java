@@ -1,6 +1,7 @@
 package com.fanfiction.fanfictionapi.entity;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,10 +18,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "fanfic_table")
 @Data
+@EqualsAndHashCode
 public class FanficEntity {
 
   @Id
@@ -45,9 +48,9 @@ public class FanficEntity {
       name = "fanfic_tags_table",
       joinColumns = @JoinColumn(name = "fanfic_id"),
       inverseJoinColumns = @JoinColumn(name = "tag_id"))
-  private Set<TagEntity> tagEntities;
+  private List<TagEntity> tagEntities;
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "fandom_id")
   private FandomEntity fandomEntity;
 
@@ -60,4 +63,7 @@ public class FanficEntity {
 
   @OneToMany(mappedBy = "fanficEntity", fetch = FetchType.LAZY)
   private Set<FanficRating> ratings;
+
+  @Column(name = "average_rating")
+  private int averageRating;
 }
