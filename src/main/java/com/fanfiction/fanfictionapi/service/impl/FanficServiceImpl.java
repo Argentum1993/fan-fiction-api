@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FanficServiceImpl implements FanficService {
+  private final int LIMIT_FANFICS = 10;
+
   private final FanficEntityRepository  fanficEntityRepository;
   private final FanficEntityDtoMapper   fanficEntityDtoMapper;
 
@@ -58,5 +60,28 @@ public class FanficServiceImpl implements FanficService {
       }
     }
     return PageRequest.of(pageNumber, pageSize);
+  }
+
+  @Override
+  public List<FanficDTO> getLatestFanfics(Integer size) {
+    return getLimitedAndSortedFanfics(size, "publicationDate");
+  }
+
+  @Override
+  public List<FanficDTO> getRatingFanfics(Integer size) {
+    return getLimitedAndSortedFanfics(size, "averageRating");
+  }
+
+  private List<FanficDTO> getLimitedAndSortedFanfics(Integer size, String sortBy){
+    Pageable  pageable;
+
+    if (size == null){
+      size = LIMIT_FANFICS;
+    }
+    if (sortBy != null)
+      pageable = PageRequest.of(0, size, Sort.by(sortBy));
+    else
+      pageable = PageRequest.of(0, size);
+    return fanficEntityDtoMapper.map(fanficEntityRepository.findAll(pageable).getContent());
   }
 }
