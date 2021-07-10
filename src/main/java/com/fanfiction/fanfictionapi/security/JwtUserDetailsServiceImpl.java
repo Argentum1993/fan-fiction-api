@@ -1,5 +1,7 @@
 package com.fanfiction.fanfictionapi.security;
 
+import static org.springframework.transaction.annotation.Propagation.SUPPORTS;
+
 import com.fanfiction.fanfictionapi.entity.UserEntity;
 import com.fanfiction.fanfictionapi.security.jwt.JwtUser;
 import com.fanfiction.fanfictionapi.security.jwt.JwtUserFactory;
@@ -9,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("JwtUserDetailsServiceImpl")
 public class JwtUserDetailsServiceImpl implements UserDetailsService {
@@ -23,6 +26,7 @@ public class JwtUserDetailsServiceImpl implements UserDetailsService {
 
 
   @Override
+  @Transactional(propagation = SUPPORTS, readOnly = true)
   public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
     UserEntity userEntity = userService.findByEmail(email).orElseThrow(
         () -> new UsernameNotFoundException(String.format("User with email: %s not found", email))

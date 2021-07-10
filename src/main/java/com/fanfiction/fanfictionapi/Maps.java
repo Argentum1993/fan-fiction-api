@@ -9,6 +9,7 @@ public class Maps {
   public static final String AUTH = VERSION_API + "/auth";
   public static final String FANFIC = VERSION_API + "/fanfic";
   public static final String USERS = VERSION_API + "/users";
+  public static final String FANDOMS = VERSION_API + "/fandoms";
 
   // Config allowed endpoints
   public static final String LOGIN = "/login";
@@ -39,7 +40,7 @@ public class Maps {
       FANFIC_CHAPTERS_ENDPOINT,
       FANFIC_CHAPTER_ENDPOINT,
       FANFIC_CHAPTER_ENDPOINT,
-      FANFIC_CHAPTER_NAMES_ENDPOINT
-
+      FANFIC_CHAPTER_NAMES_ENDPOINT,
+      FANDOMS
   };
 }

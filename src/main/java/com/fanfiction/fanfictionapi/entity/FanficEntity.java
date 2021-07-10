@@ -48,6 +48,7 @@ public class FanficEntity {
       name = "fanfic_tags_table",
       joinColumns = @JoinColumn(name = "fanfic_id"),
       inverseJoinColumns = @JoinColumn(name = "tag_id"))
+  @EqualsAndHashCode.Exclude
   private List<TagEntity> tagEntities;
 
   @ManyToOne(fetch = FetchType.EAGER)
@@ -55,13 +56,16 @@ public class FanficEntity {
   private FandomEntity fandomEntity;
 
   @OneToMany(mappedBy = "fanficEntity", fetch = FetchType.LAZY)
+  @EqualsAndHashCode.Exclude
   private Set<ChapterEntity> chapterEntities;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
+  @EqualsAndHashCode.Exclude
   private UserEntity userEntity;
 
   @OneToMany(mappedBy = "fanficEntity", fetch = FetchType.LAZY)
+  @EqualsAndHashCode.Exclude
   private Set<FanficRating> ratings;
 
   @Column(name = "average_rating")

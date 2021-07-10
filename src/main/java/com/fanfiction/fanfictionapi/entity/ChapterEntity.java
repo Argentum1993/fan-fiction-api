@@ -10,10 +10,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Table(name = "chapter_table")
 @Data
+@EqualsAndHashCode
 public class ChapterEntity {
 
   @Id
@@ -34,5 +36,6 @@ public class ChapterEntity {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "fanfic_id")
+  @EqualsAndHashCode.Exclude
   private FanficEntity fanficEntity;
 }

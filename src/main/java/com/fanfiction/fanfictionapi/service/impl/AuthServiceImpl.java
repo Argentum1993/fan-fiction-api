@@ -39,9 +39,14 @@ public class AuthServiceImpl implements AuthService {
       UserEntity userEntity = userService.findByEmail(email)
           .orElseThrow(() -> new UsernameNotFoundException("User doesn't exist"));
       String token = jwtTokenProvider.createToken(email);
-      return ResponseEntity.ok(new LoginResponseDTO(userEntity.getEmail(), token));
+      return ResponseEntity.ok(new LoginResponseDTO(
+          userEntity.getId(),
+          userEntity.getFirstName(),
+          userEntity.getLastName(),
+          userEntity.getEmail(),
+          token
+      ));
     } catch (AuthenticationException e){
-      System.out.println(e.getMessage());
       return new ResponseEntity<>(
           "Invalid username/password combination", HttpStatus.FORBIDDEN);
     }
@@ -50,10 +55,19 @@ public class AuthServiceImpl implements AuthService {
   @Override
   public ResponseEntity<String> registration(RegistrationDTO request) {
     UserEntity userEntity = new UserEntity(
-        request.getUsername(), request.getPassword(), request.getEmail());
+        request.getFirstName(),
+        request.getLastName(),
+        request.getPassword(),
+        request.getEmail()
+    );
     userEntity = userService.saveUser(userEntity);
+    String responseMsg = String.format(
+        "%s %s you are register!",
+        userEntity.getFirstName(),
+        userEntity.getLastName()
+    );
     return userEntity != null
-        ? new ResponseEntity<>(userEntity.getUserName() + " you are register!", HttpStatus.OK)
+        ? new ResponseEntity<>(responseMsg, HttpStatus.OK)
         : new ResponseEntity<>(HttpStatus.BAD_REQUEST);
   }
 }
