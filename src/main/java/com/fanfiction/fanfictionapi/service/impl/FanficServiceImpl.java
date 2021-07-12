@@ -72,6 +72,22 @@ public class FanficServiceImpl implements FanficService {
     return getLimitedAndSortedFanfics(size, "averageRating");
   }
 
+  @Override
+  public Integer countFanficsByUserId(Long userId) {
+    return fanficEntityRepository.countByUserEntityId(userId);
+  }
+
+  @Override
+  public List<FanficDTO> getFanficByFandomId(Long fandomId, PaginationRequestDTO pagination) {
+    return fanficEntityDtoMapper
+        .map(fanficEntityRepository.findByFandomEntityId(fandomId, createPageable(pagination)));
+  }
+
+  @Override
+  public Integer countFanficByFandomId(Long fandomId) {
+    return fanficEntityRepository.countByFandomEntityId(fandomId);
+  }
+
   private List<FanficDTO> getLimitedAndSortedFanfics(Integer size, String sortBy){
     Pageable  pageable;
 

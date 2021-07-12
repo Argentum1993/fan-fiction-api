@@ -36,13 +36,6 @@ public class FanficController {
     this.fanficService = fanficService;
   }
 
-  //TODO: Delete before deploy
-  
-  @PostMapping
-  public String test(){
-    return "ok";
-  }
-
   @GetMapping(FANFIC_ENDPOINT) // Contain variable: {id}
   public FanficDTO getFanfic(@PathVariable Long id){
     return fanficService.getFanfic(id);

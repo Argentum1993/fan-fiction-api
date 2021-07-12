@@ -10,4 +10,7 @@ public interface FanficService {
   FanficDTO         getFanfic(Long id);
   List<FanficDTO>   getLatestFanfics(Integer size);
   List<FanficDTO>   getRatingFanfics(Integer size);
+  Integer           countFanficsByUserId(Long userId);
+  List<FanficDTO>   getFanficByFandomId(Long fandomId, PaginationRequestDTO pagination);
+  Integer           countFanficByFandomId(Long fandomId);
 }

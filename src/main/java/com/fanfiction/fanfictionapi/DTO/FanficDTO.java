@@ -11,6 +11,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class FanficDTO {
+  private Long id;
   private String author;
   private String title;
   private String description;

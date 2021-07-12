@@ -3,6 +3,7 @@ package com.fanfiction.fanfictionapi.service.impl;
 import com.fanfiction.fanfictionapi.DTO.FandomDTO;
 import com.fanfiction.fanfictionapi.DTO.FanficDTO;
 import com.fanfiction.fanfictionapi.DTO.PaginationRequestDTO;
+import com.fanfiction.fanfictionapi.DTO.UserDTO;
 import com.fanfiction.fanfictionapi.controller.UserController;
 import com.fanfiction.fanfictionapi.entity.FandomEntity;
 import com.fanfiction.fanfictionapi.entity.RoleEntity;
@@ -58,9 +59,7 @@ public class UserServiceImpl implements UserService {
   public UserEntity saveUser(UserEntity userEntity) {
     RoleEntity userRole = roleEntityRepository.findByName(Role.ROLE_USER.name());
     userEntity.setRoleEntity(userRole);
-    System.out.println(userEntity.getPassword());
     userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
-    System.out.println(userEntity.getPassword());
     userEntity.setStatus(UserStatus.ACTIVE);
     return userEntityRepository.save(userEntity);
   }
@@ -99,5 +98,26 @@ public class UserServiceImpl implements UserService {
     userEntity.setFandomEntities(userFandoms);
     userEntityRepository.save(userEntity);
     return fandomEntityDTOMapper.map(userFandoms);
+  }
+
+  @Override
+  public Integer countFanfics(Long userId) {
+    return fanficService.countFanficsByUserId(userId);
+  }
+
+  @Override
+  public boolean updateUser(Long userId, UserDTO request) {
+    if (request.getEmail() == null && request.getFirstName() == null
+        && request.getLastName() == null)
+      return false;
+    UserEntity userEntity = userEntityRepository.findById(userId)
+        .orElseThrow(ResourceNotFoundException::new);
+    if (request.getFirstName() != null)
+      userEntity.setFirstName(request.getFirstName());
+    if (request.getLastName() != null)
+      userEntity.setLastName(request.getLastName());
+    if (request.getEmail() != null)
+      userEntity.setEmail(request.getEmail());
+    return userEntityRepository.save(userEntity) != null;
   }
 }
