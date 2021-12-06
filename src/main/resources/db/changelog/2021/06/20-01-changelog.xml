@@ -132,10 +132,8 @@
 
   <changeSet id="1" author="Artsyom">
     <sql>
-      INSERT INTO role_table (name)
-      VALUES ("ROLE_USER");
-      INSERT INTO role_table (name)
-      VALUES ("ROLE_ADMIN");
+      INSERT INTO role_table (name) VALUES ('ROLE_USER');
+      INSERT INTO role_table (name) VALUES ('ROLE_ADMIN');
     </sql>
     <rollback>
       DELETE FROM role_table
