@@ -9,8 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class TestChapterService {
   @Test
   public void testJenkins() {
-    Integer x = calculator(Integer.MAX_VALUE);
-    assertTrue(Integer.MAX_VALUE == x);
+    Integer x = calculator(Integer.MAX_VALUE / 3);
+    assertTrue(Integer.MAX_VALUE / 3 == x);
   }
 
   private Integer calculator(Integer toNumber) {
