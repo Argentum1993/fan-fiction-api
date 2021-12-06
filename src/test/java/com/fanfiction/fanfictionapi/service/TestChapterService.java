@@ -9,13 +9,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class TestChapterService {
   @Test
   public void testJenkins() {
-    Integer x = calculator(Integer.MAX_VALUE / 3);
-    assertTrue(Integer.MAX_VALUE / 3 == x);
+    Integer counter = Math.round(Integer.MAX_VALUE / 3);
+    Integer x = calculator(counter);
+
+    assertTrue(counter.equals(x));
   }
 
   private Integer calculator(Integer toNumber) {
     Integer counter = 0;
-    while (counter <= toNumber) {
+    while (counter < toNumber) {
       ++counter;
     }
     return counter;
