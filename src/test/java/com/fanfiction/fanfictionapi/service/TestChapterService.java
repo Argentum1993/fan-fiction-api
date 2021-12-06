@@ -16,7 +16,7 @@ public class TestChapterService {
   private Integer calculator(Integer toNumber) {
     Integer counter = 0;
     while (counter <= toNumber) {
-      counter++;
+      ++counter;
     }
     return counter;
   }
